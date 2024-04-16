@@ -1,0 +1,59 @@
+.auth-container {
+    max-width: 500px;
+    margin: 100px auto;
+    border: 3px solid #0788d6;
+    border-radius: 25px;
+    padding: 20px;
+}
+.heading {
+    text-align: center;
+}
+.sign-in-form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+    padding: 15px 15px;
+}
+.auth__input {
+    width: 50%;
+    margin: 0 auto;
+    padding: 10px;
+}
+.auth__button {
+    width: 30%;
+    margin: 0 auto;
+    background-color: #0788d6;
+    border: none;
+    padding: 10px 10px;
+    border-radius: 5px;
+    color: #fff;
+}
+.auth__button:hover {
+    background-color: #429dd5;
+    transition: 0.2s ease-in;
+}
+.new {
+    text-align: center;
+}
+.new a {
+    color: #0788d6;
+    text-decoration: none;
+}
+
+.forgot {
+    border: none;
+    display: inline-block;
+    padding-left: 0;
+    margin-left: 0;
+    background-color: transparent;
+    text-align: left;
+    color: #0788d6;
+}
+.forgot-wrapper {
+    text-align: center;
+}
+.password__checkbox {
+    width: 50%;
+    text-align: center;
+    margin-left: 75px;
+}
