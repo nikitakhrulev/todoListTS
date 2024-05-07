@@ -1,6 +1,10 @@
-
+@import '../node_modules/toastr/build/toastr.css';
+@import './blocks/base';
 
 
 @import './blocks/todo-list';
 @import './blocks/header';
-@import './blocks/signIn'
+@import './blocks/signIn';
+@import './blocks/preloader';
+@import './blocks/signUp';
+@import './blocks/reset-password';

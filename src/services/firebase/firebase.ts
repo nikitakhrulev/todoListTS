@@ -1,5 +1,13 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, sendPasswordResetEmail, signInWithEmailAndPassword } from "firebase/auth";
+import { greeting } from "../../components/notifications/notifications";
+import { Authorization } from "../../components/authorization/authorization";
+import { getUserId } from "../getUserTodos/getUserTodos";
+// import { AuthManager } from "../../components/startModals";
+import { StateManager } from "../../components/state";
+import { Logout } from "../../components/logout";
+import { Login } from "../../components/login";
+import { UserCollector } from "../../components/userCollector";
 
 export class Firebase {
   firebaseConfig = {
@@ -14,9 +22,10 @@ export class Firebase {
   // Initialize Firebase
   app = initializeApp(this.firebaseConfig);
   auth = getAuth(this.app);
-
+  authorization = new Authorization();
+  Logout = new Logout();
+  Login = new Login();
   
-
   initAuth() {
     const signInForm = document.querySelector('.sign-in-form') as HTMLFormElement;
     signInForm.addEventListener('submit', async (e) => {
@@ -33,8 +42,9 @@ export class Firebase {
         const user: any = userCredential.user;
         console.log(typeof user)
         if (user) {
-          console.log('User signed in:', user);
-          console.log(typeof user)
+          UserCollector.collectUserCredentials(user);
+          StateManager.userLoggedIn();
+          this.Login.loginCheckState();
         }
       } catch (error) {
         console.error('Error signing in:', error.message);
@@ -42,7 +52,64 @@ export class Firebase {
     }
     });
   }
-  
+  initSignUp() {
+    const signUpForm = document.querySelector('.sign-up-form') as HTMLFormElement;
+    signUpForm.addEventListener('submit', async(e) => {
+      e.preventDefault();
+
+      const emailInputSU = document.getElementById('emailSU') as HTMLInputElement;
+      const passwordInputSU = document.getElementById('passwordSU') as HTMLInputElement;
+      const repeatPasswordSU = document.getElementById('passwordSU1') as HTMLInputElement;
+
+      if (emailInputSU && passwordInputSU && repeatPasswordSU) {
+        const email = emailInputSU.value;
+        const password = passwordInputSU.value;
+        const repPassword = repeatPasswordSU.value;
+
+        try {
+          const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
+          const user = userCredential.user;
+          if (user) {
+            this.authorization.getIDs();
+          }
+
+        } catch (error) {
+          
+        }
+      }
+    })
+  }
+  resetPassword() {
+    const resetPasswordForm = document.querySelector('.reset-password-form') as HTMLFormElement;
+
+    resetPasswordForm.addEventListener('submit', async(e) => {
+      e.preventDefault()
+
+      const emailForResetField = document.getElementById('reset-password-input') as HTMLInputElement;
+
+      const emailForReset = emailForResetField.value;
+
+      try {
+        await sendPasswordResetEmail(this.auth, emailForReset);
+        console.log('An email for reset was sent')
+      } catch (error) {
+        console.log('An error occured:', error.message);
+      }
+    })
+  }
+  logout() {
+    const logoutButton = document.getElementById('logoutBtn') as HTMLElement;
+
+    logoutButton.addEventListener('click', async () => {
+      try {
+        await this.auth.signOut();
+        StateManager.userLoggedOut();
+        this.Logout.logoutCheckState();
+      } catch (error) {
+        console.log('an error occured', error);
+      }
+    })
+  }
 }
 
         

@@ -1,12 +1,17 @@
+// import { AuthManager } from './src/components/startModals';
 import { Firebase } from './src/services/firebase/firebase';
 
 
 document.addEventListener('DOMContentLoaded', initApp);
 
 
-
+// var am = new AuthManager();
 var fb = new Firebase();
 fb.initAuth();
+fb.initSignUp();
+fb.resetPassword();
+fb.logout();
+// am.initEventListeners();
 
 async function getAllTodos() {
     const response = await fetch('https://todo-list-8ae56-default-rtdb.europe-west1.firebasedatabase.app/todos.json?auth=YOUR_FIREBASE_REST_API_KEY');

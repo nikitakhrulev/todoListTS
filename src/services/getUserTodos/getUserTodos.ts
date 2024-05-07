@@ -1,13 +1,14 @@
 import { TodoTS } from "../handleTodo/handleTodo";
 import { todos } from "../../../app";
 import { users } from "../../../app";
-import { Todo, User } from "../../types/types";
+import { User } from "firebase/auth";
+import { UserCollector } from "../../components/userCollector";
 
 let userNumber: number;
-export function getUserId(user: User) {
-    console.log(typeof user)
-    const current = user.email;
-    console.log(typeof user.email)
+export function getUserId(userData: any) {
+    console.log(typeof userData)
+    const current = userData.email;
+    console.log(typeof userData.email)
     console.log('User signed in:', current)
     const result = users.find(el => el.email === current);
     if (result) {
@@ -27,3 +28,5 @@ export function printTodo(resultID: number) {
         todoItem.createTodoHTML()
     })
 }
+
+export {userNumber}

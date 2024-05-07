@@ -1,4 +1,4 @@
-import { notificationSuccess, notificationError } from './../../components/notifications/notifications'
+import { notificationSuccess, notificationError } from '../../components/notifications/notifications'
 
 export async function toggleTodoComplete(todoId: string, completed: boolean) {
     const todo = todoId;
@@ -24,7 +24,7 @@ export async function toggleTodoComplete(todoId: string, completed: boolean) {
     }
 };  
 
-export async function deleteTodo(todoId: number) {
+export async function deleteTodo(todoId: any) {
     const todo = todoId;
     console.log(todo)
     try {

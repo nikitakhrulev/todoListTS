@@ -13,3 +13,4 @@ export function notificationInfo() {
 export function greeting(props: any) {
     toastr.info(`User logged in:<br> ${props}`);
 }
+
